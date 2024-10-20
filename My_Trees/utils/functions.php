@@ -1,5 +1,5 @@
 <?php
-function getCountry():array
+function getCountry(): array
 {
     $conn = getConnection();
     $sql = "SELECT id, name FROM country"; // Ajusta los nombres de los campos y la tabla según tu base de datos
@@ -24,7 +24,7 @@ function getCountry():array
 }
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306','root','123456','my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
     return $connection;
 }
 function saveUser($user): bool
@@ -38,10 +38,10 @@ function saveUser($user): bool
     $password = md5($user['password']);
 
     $sql = "INSERT INTO usuarios (name,lastname,phone_number, username,address,country,password) VALUES ('$firstName','$lastName','$phoneNumber','$username','$address','$opcionSeleccionada','$password')";
-    try{
+    try {
         $conn = getConnection();
-        mysqli_query($conn,$sql);
-    } catch (Exception $e){
+        mysqli_query($conn, $sql);
+    } catch (Exception $e) {
         echo $e->getMessage();
         return false;
     }
@@ -54,7 +54,7 @@ function authenticate($username, $password): bool|array|null
     $sql = "SELECT * FROM usuarios WHERE `username` = '$username' AND `password` = '$password'";
     $result = $conn->query($sql);
 
-    if($conn->connect_errno){
+    if ($conn->connect_errno) {
         $conn->close();
         return false;
     }
