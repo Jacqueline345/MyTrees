@@ -4,7 +4,6 @@ $conn = getConnection();
 $sql = "SELECT * FROM arboles WHERE `estado` = 'disponible'";
 $result = mysqli_query($conn, $sql);
 ?>
-
 <html lang="en">
 
 <head>
@@ -16,6 +15,7 @@ $result = mysqli_query($conn, $sql);
 </head>
 
 <body>
+    <?php require('inc/header.php') ?>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -41,7 +41,7 @@ $result = mysqli_query($conn, $sql);
                         <td><?php echo htmlspecialchars($row['estado']); ?></td>
                         <td><?php echo htmlspecialchars($row['precio']); ?></td>
                         <td><?php echo htmlspecialchars($row['foto']); ?></td>
-                        <td> <a href="#" class="btn-primary"> Comprar </a></td>
+                        <td> <a href="compra.php" class="btn-primary"> Comprar </a></td>
                     </tr>
                     <?php
                 }

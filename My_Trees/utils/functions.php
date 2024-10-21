@@ -62,4 +62,25 @@ function authenticate($username, $password): bool|array|null
     $conn->close();
     return $results;
 }
+function saveCompras($arbol): bool
+{
+    $nombre_comprador = $arbol['nombre_comprador'];
+    $especie = $arbol['especie'];
+    $tamaño = $arbol['tamaño'];
+    $ubicacion_geografica = $arbol['ubicacion_geografica'];
+    $estado = $arbol['estado'];
+    $precio = $arbol['precio'];
+    $foto = $arbol['foto'];
+
+    $sql = "INSERT INTO mis_compras (nombre_comprador,especie,tamaño,ubicacion_geografica,estado,precio,foto) VALUES ('$nombre_comprador',$especie','$tamaño','$ubicacion_geografica','$estado','$precio','$foto')";
+
+    try{
+        $conn = getConnection();
+        mysqli_query($conn, $sql);
+    }catch (Exception $e){
+        echo $e->getMessage();
+        return false;
+    }
+    return true;
+}
 ?>
