@@ -1,9 +1,34 @@
-<?php echo htmlspecialchars($row['id']); ?>
-<?php echo htmlspecialchars($row['nombre_comprador']); ?>
-<?php echo htmlspecialchars($row['especie']); ?>
-<?php echo htmlspecialchars($row['tamaño']); ?>
-<?php echo htmlspecialchars($row['ubicacion_geografica']); ?>
-<?php echo htmlspecialchars($row['estado']); ?>
-<?php echo htmlspecialchars($row['precio']); ?>
-<?php echo htmlspecialchars($row['foto']); ?>
-          
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "123456";
+$dbname = "my_trees";
+
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = (int) $_GET['id'];
+    $sql = "SELECT id, especie, tamaño, ubicacion_geografica, estado, precio, foto FROM mis_compras WHERE id= ?";
+    $result = $conn->prepare($sql);
+    $result->bind_param("i", $id);
+    $result->execute();
+    $result = $result->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row) {
+        echo "Id: " . htmlspecialchars($row['id']) . "<br>";
+        echo "Especie: " . htmlspecialchars($row['especie']) . "<br>";
+        echo "Tamaño: " . htmlspecialchars($row['tamaño']) . "<br>";
+        echo "Ubicacion: " . htmlspecialchars($row['ubicacion_geografica']) . "<br>";
+        echo "Estado: " . htmlspecialchars($row['estado']) . "<br>";
+        echo "Precio: " . htmlspecialchars($row['precio']) . "<br>";
+        echo "Foto: " . htmlspecialchars($row['foto']) . "<br>";
+    }
+} else {
+    echo "No hay arboles registrados.";
+}
+
+?>

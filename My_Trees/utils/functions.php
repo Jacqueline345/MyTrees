@@ -72,14 +72,40 @@ function saveCompras($arbol): bool
     $precio = $arbol['precio'];
     $foto = $arbol['foto'];
 
-    $sql = "INSERT INTO mis_compras (nombre_comprador,especie,tamaño,ubicacion_geografica,estado,precio,foto) VALUES ('$nombre_comprador',$especie','$tamaño','$ubicacion_geografica','$estado','$precio','$foto')";
+    $sql = "INSERT INTO mis_compras (nombre_comprador,especie,tamaño,ubicacion_geografica,estado,precio,foto) VALUES ('$nombre_comprador','$especie','$tamaño','$ubicacion_geografica','$estado','$precio','$foto')";
 
-    try{
+    try {
         $conn = getConnection();
         mysqli_query($conn, $sql);
-    }catch (Exception $e){
+    } catch (Exception $e) {
         echo $e->getMessage();
         return false;
     }
+    return true;
+}
+
+function UpdateArbol($arbol): bool
+{
+    $id = $arbol['id']; // Asegúrate de que el ID esté en el array
+    $query = "UPDATE arboles SET estado = 'Vendido' WHERE id = ?";
+
+    try {
+        $conn = getConnection();
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id); // Vincula el parámetro de ID como entero
+        $stmt->execute();
+
+        if ($stmt->affected_rows === 0) {
+            echo "No se encontró el árbol con el ID especificado.";
+            return false;
+        }
+
+        $stmt->close();
+        $conn->close();
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        return false;
+    }
+
     return true;
 }

@@ -41,7 +41,7 @@ $result = mysqli_query($conn, $sql);
                         <td><?php echo htmlspecialchars($row['estado']); ?></td>
                         <td><?php echo htmlspecialchars($row['precio']); ?></td>
                         <td><?php echo htmlspecialchars($row['foto']); ?></td>
-                        <td> <a href="compra.php" class="btn-primary"> Comprar </a></td>
+                        <td> <a href="compra.php?id=<?php echo urlencode($row['id']); ?>" class="btn-primary"> Comprar </a></td>
                     </tr>
                     <?php
                 }

@@ -13,7 +13,7 @@ if (!$conn) {
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $clave = $_GET["id"];
 
-    $stmt = $conn->prepare("DELETE FROM arboles WHERE id = ?");
+    $stmt = $conn->prepare("DELETE FROM mis_compras WHERE id = ?");
     $stmt->bind_param("i", $clave); 
 
     if ($stmt->execute()) {
