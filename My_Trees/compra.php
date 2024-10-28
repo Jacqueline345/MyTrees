@@ -1,34 +1,17 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "123456";
-$dbname = "my_trees";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+include('utils/functions.php');
+$conn = getConnection();
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = $_GET["id"];
-
-    $sql = "SELECT id, especie, tamaño, ubicacion_geografica, estado, precio, foto FROM arboles WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $stmt->close();
-        $conn->close();
-    } else {
-        echo "User not found.";
-        exit;
-    }
+    $id = (int) $_GET['id'];
+    $sql = "SELECT id, especie, tamaño, ubicacion_geografica, estado, precio, foto FROM arboles WHERE id= ?";
+    $result = $conn->prepare($sql);
+    $result->bind_param("i", $id);
+    $result->execute();
+    $result = $result->get_result();
+    $row = $result->fetch_assoc();
 }
 ?>
+
 <html lang="en">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +25,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <h1 class="display-4"> Compra de arboles </h1>
         <hr class="my-4">
     </div>
-    <a href="mis_compras.php" class="btn btn-warning"> Mis Compras </a>
-
     <form method="post" action="actions/compra.php">
         <div class="form-group">
             <label for="nombre_comprador"> Nombre del comprador </label>
@@ -51,34 +32,34 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         </div>
         <div class="form-group">
             <label for="especie"> Especie </label>
-            <input id="especie" class="form-control" type="text" name="especie"
-                value="<?php echo isset($row['especie']) ? htmlspecialchars($row['especie']) : ''; ?>">
+            <input id="especie" class="form-control" type="text" name="especie" value="<?php echo $row['especie']; ?>">
         </div>
         <div class="form-group">
             <label for="tamaño"> Tamaño </label>
-            <input id="tamaño" class="form-control" type="text" name="tamaño"
-                value="<?php echo isset($row['tamaño']) ? htmlspecialchars($row['tamaño']) : ''; ?>">
+            <input id="tamaño" class="form-control" type="text" name="tamaño" value="<?php echo $row['tamaño']; ?>">
         </div>
         <div class="form-group">
             <label for="ubicacion_geografica"> Ubicacion geografica </label>
             <input id="ubicacion_geografica" class="form-control" type="text" name="ubicacion_geografica"
-                value="<?php echo isset($row['ubicacion_geografica']) ? htmlspecialchars($row['ubicacion_geografica']) : ''; ?>">
+                value="<?php echo $row['ubicacion_geografica']; ?>">
         </div>
         <div class="form-group">
             <label for="estado"> Estado </label>
-            <input id="estado" class="form-control" type="text" name="estado"
-                value="<?php echo isset($row['estado']) ? htmlspecialchars($row['estado']) : ''; ?>">
+            <input id="estado" class="form-control" type="text" name="estado" value="<?php echo $row['estado']; ?>">
         </div>
         <div class="form-group">
             <label for="precio"> Precio </label>
-            <input id="precio " class="form-control" type="text" name="precio"
-                value="<?php echo isset($row['precio']) ? htmlspecialchars($row['precio']) : ''; ?>">
+            <input id="precio " class="form-control" type="text" name="precio" value="<?php echo $row['precio']; ?>">
         </div>
         <div class="form-group">
-            <label for="foto"> Foto </label>
-            <img id="foto" class="form-control" src="compra.php" alt="foto"
-                value="<?php echo isset($row['foto']) ? htmlspecialchars($row['foto']) : ''; ?>">
+            <label for="foto">Foto</label>
+            <?php if (isset($row['foto'])): ?>
+                <img id="foto" class="img-fluid" src="<?php echo $row['foto']; ?>" alt="foto">
+            <?php else: ?>
+                <p>No hay foto disponible</p>
+            <?php endif; ?>
         </div>
+        <button type="submit" class="btn btn-primary"> Comprar </button>
     </form>
     </div>
 </body>

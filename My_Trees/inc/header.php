@@ -19,6 +19,9 @@
         <li class="nav-item">
             <a href="actions/logout.php" class="nav-link active"> Logout </a>
         </li>
+        <li class="nav-item">
+            <a href="mis_compras.php" class="nav-link active"> My shopping </a>
+        </li>
     </ul>
 </body>
 
