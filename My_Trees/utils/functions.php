@@ -47,11 +47,11 @@ function saveUser($user): bool
     }
     return true;
 }
-function authenticate($username, $password): bool|array|null
+function authenticate($username, $password, $role): bool|array|null
 {
     $conn = getConnection();
     $password = md5($password);
-    $sql = "SELECT * FROM usuarios WHERE `username` = '$username' AND `password` = '$password'";
+    $sql = "SELECT * FROM usuarios WHERE `username` = '$username' AND `password` = '$password' AND $role = `role`";
     $result = $conn->query($sql);
 
     if ($conn->connect_errno) {
@@ -62,6 +62,7 @@ function authenticate($username, $password): bool|array|null
     $conn->close();
     return $results;
 }
+
 function saveCompras($arbol): bool
 {
     $nombre_comprador = $arbol['nombre_comprador'];

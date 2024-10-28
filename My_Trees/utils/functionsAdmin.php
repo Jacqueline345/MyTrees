@@ -66,4 +66,39 @@ function getTreesByStatus(): array
     return $trees;
 }
 
+function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado) {
+    $conn = getConnection();
+    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ? WHERE id = ?");
+    
+    // Bind the parameters, make sure the count matches the number of parameters
+    $stmt->bind_param("sssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $id);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function getTreeById($id) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM arboles WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $tree = $result->fetch_assoc();
+        $stmt->close();
+        $conn->close();
+        return $tree;
+    } else {
+        $stmt->close();
+        $conn->close();
+        return false; 
+    }
+}
+
+
 

@@ -77,7 +77,7 @@ $treesByStatus = getTreesByStatus();
                             <td><?php echo htmlspecialchars($tree['tamaño']); ?></td>
                             <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
                             <td>
-                                <a href="edit_tree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
+                                <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
                                 <a href="delete_tree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
                                     onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
                             </td>
@@ -105,7 +105,7 @@ $treesByStatus = getTreesByStatus();
                             <td><?php echo htmlspecialchars($tree['tamaño']); ?></td>
                             <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
                             <td>
-                                <a href="edit_tree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
+                                <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
                                 <a href="delete_tree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
                                     onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
                             </td>
