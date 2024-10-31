@@ -1,5 +1,18 @@
 <?php
 session_start();
+if (isset($_SESSION['success_message'])): ?>
+    <div class="alert alert-success">
+        <?php echo $_SESSION['success_message'];
+        unset($_SESSION['success_message']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error_message'])): ?>
+    <div class="alert alert-danger">
+        <?php echo $_SESSION['error_message'];
+        unset($_SESSION['error_message']); ?>
+    </div>
+<?php endif;
 require('utils/functionsAdmin.php');
 
 // Obtener estadísticas
@@ -8,7 +21,8 @@ $treesAvailableCount = getAvailableTreesCount();
 $treesSoldCount = getSoldTreesCount();
 
 // Obtener las especies de árboles
-$treesByStatus = getTreesByStatus();
+$trees = getAllTrees();
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +43,7 @@ $treesByStatus = getTreesByStatus();
         <!-- Sección de estadísticas -->
         <div class="row">
             <div class="col-md-4">
-                <div class="card bg-primary text-white">
+                <div class="card bg-info text-white">
                     <div class="card-body">
                         <h5 class="card-title">Amigos Registrados</h5>
                         <p class="card-text"><?php echo $friendsCount; ?></p>
@@ -54,11 +68,14 @@ $treesByStatus = getTreesByStatus();
             </div>
         </div>
 
-        <!-- Tabla de Árboles por Estado -->
+        <!-- Botón para añadir un nuevo árbol -->
+        <div class="my-3">
+            <a href="addTree.php" class="btn btn-primary">Agregar Nuevo Árbol</a>
+        </div>
+
+        <!-- Tabla de Árboles con Estado -->
         <div class="my-4">
             <h2>Listado de Árboles</h2>
-
-            <h3>Árboles Disponibles</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -66,47 +83,21 @@ $treesByStatus = getTreesByStatus();
                         <th>Nombre Científico</th>
                         <th>Tamaño</th>
                         <th>Ubicación Geográfica</th>
+                        <th>Estado</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($treesByStatus['disponible'] as $tree) { ?>
+                    <?php foreach ($trees as $tree) { ?>
                         <tr>
                             <td><?php echo htmlspecialchars($tree['especie']); ?></td>
                             <td><?php echo htmlspecialchars($tree['nombre_cientifico']); ?></td>
                             <td><?php echo htmlspecialchars($tree['tamaño']); ?></td>
                             <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
+                            <td><?php echo htmlspecialchars($tree['estado']); ?></td>
                             <td>
                                 <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
-                                <a href="delete_tree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
-                                    onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-
-            <h3>Árboles Vendidos</h3>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Especie</th>
-                        <th>Nombre Científico</th>
-                        <th>Tamaño</th>
-                        <th>Ubicación Geográfica</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($treesByStatus['vendido'] as $tree) { ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($tree['especie']); ?></td>
-                            <td><?php echo htmlspecialchars(string: $tree['nombre_cientifico']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['tamaño']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
-                            <td>
-                                <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
-                                <a href="delete_tree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
+                                <a href="actions/deleteTree?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
                                     onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
                             </td>
                         </tr>

@@ -51,17 +51,33 @@ function authenticate($username, $password, $role): bool|array|null
 {
     $conn = getConnection();
     $password = md5($password);
-    $sql = "SELECT * FROM usuarios WHERE `username` = '$username' AND `password` = '$password' AND $role = `role`";
-    $result = $conn->query($sql);
-
-    if ($conn->connect_errno) {
-        $conn->close();
+    
+    // Ajuste para buscar el rol "amigo" en la tabla `usuarios`
+    if ($role === 'amigo') {
+        $sql = "SELECT * FROM usuarios WHERE username = ? AND password = ? AND role = 'amigo'";
+    } elseif ($role === 'admin') {
+        $sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
+    } else {
         return false;
     }
-    $results = $result->fetch_array();
-    $conn->close();
-    return $results;
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_array(MYSQLI_ASSOC);
+        $stmt->close();
+        $conn->close();
+        return $user;
+    } else {
+        $stmt->close();
+        $conn->close();
+        return null;
+    }
 }
+
 
 function saveCompras($arbol): bool
 {
