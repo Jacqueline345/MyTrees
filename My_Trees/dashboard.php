@@ -44,10 +44,13 @@ $trees = getAllTrees();
         <div class="row">
             <div class="col-md-4">
                 <div class="card bg-info text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Amigos Registrados</h5>
-                        <p class="card-text"><?php echo $friendsCount; ?></p>
-                    </div>
+                    <!-- Botón para ver amigos registrados -->
+                    <a href="seeFriends.php" class="card bg-info text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Amigos Registrados</h5>
+                            <p class="card-text"><?php echo $friendsCount; ?></p>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4">
