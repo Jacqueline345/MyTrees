@@ -26,6 +26,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <hr class="my-4">
     </div>
     <form method="post" action="actions/compra.php">
+    <label> Si deseas comprar, actualiza y luego compras... </label>
+    <input type="hidden" name="id" value="<?php echo urlencode($row['id']); ?>">
         <div class="form-group">
             <label for="nombre_comprador"> Nombre del comprador </label>
             <input id="nombre_comprador" class="form-control" type="text" name="nombre_comprador">
@@ -59,8 +61,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 <p>No hay foto disponible</p>
             <?php endif; ?>
         </div>
-        <button type="submit" class="btn btn-primary"> Comprar </button>
+        <button type="submit" class="btn btn-warning"> Comprar </button>
     </form>
+    <a href="actions/update.php?id=<?php echo urlencode($row['id']); ?>" class="btn btn-warning"> Actualiza la
+            compra</a>
     </div>
 </body>
 

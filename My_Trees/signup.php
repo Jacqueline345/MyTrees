@@ -14,7 +14,6 @@ $error_msg = isset($_GET['error']) ? $_GET(['error']) : '';
 </head>
 
 <body>
-    <?php require('inc/header.php') ?>
     <div class="jumbotron">
         <h1 class="display-4"> Signup </h1>
         <p class="lead"> This is the signup process</p>

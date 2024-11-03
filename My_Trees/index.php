@@ -12,7 +12,6 @@ $error_msg = isset($_GET['error']) ? $_GET['error'] : '';
 </head>
 
 <body>
-    <?php require('inc/header.php') ?>
     <div class="container-fluid">
         <div class="jumbotron">
             <h1 class="display-4">Login</h1>
@@ -42,6 +41,8 @@ $error_msg = isset($_GET['error']) ? $_GET['error'] : '';
             <button type="submit" class="btn btn-primary"> Login </button>
         </form>
     </div>
+    <a href="signup.php" class="nav-link active"> Signup </a>
+
 </body>
 
 </html>

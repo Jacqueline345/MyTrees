@@ -17,7 +17,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $stmt->bind_param("i", $clave); 
 
     if ($stmt->execute()) {
-        header("Location: ../trees.php");
+        header("Location: ../mis_compras.php");
         exit();
 
     } else {
