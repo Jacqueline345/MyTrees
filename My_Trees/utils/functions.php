@@ -100,33 +100,4 @@ function saveCompras($arbol): bool
     }
     return true;
 }
-<<<<<<< HEAD
 ?>
-=======
-
-function UpdateArbol($arbol): bool
-{
-    $id = $arbol['id']; // Asegúrate de que el ID esté en el array
-    $query = "UPDATE arboles SET estado = 'Vendido' WHERE id = ?";
-
-    try {
-        $conn = getConnection();
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $id); // Vincula el parámetro de ID como entero
-        $stmt->execute();
-
-        if ($stmt->affected_rows === 0) {
-            echo "No se encontró el árbol con el ID especificado.";
-            return false;
-        }
-
-        $stmt->close();
-        $conn->close();
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        return false;
-    }
-
-    return true;
-}
->>>>>>> a178607e9ba5fbbac3ec38e77e1eb9fcdc6a9ab3
