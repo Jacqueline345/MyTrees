@@ -25,6 +25,9 @@
         <li class="nav-item">
             <a href="mis_compras.php" class="nav-link active"> My shopping </a>
         </li>
+        <li class= "nav-item">
+            <a href="dashboard.php" class="nav-link active"> Dashboard </a>
+        </li>
     </ul>
 </body>
 

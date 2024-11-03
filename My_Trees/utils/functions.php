@@ -24,7 +24,7 @@ function getCountry(): array
 }
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');//aqui siempre hay que cambiar la contraseña
     return $connection;
 }
 function saveUser($user): bool
@@ -47,21 +47,38 @@ function saveUser($user): bool
     }
     return true;
 }
-function authenticate($username, $password): bool|array|null
+function authenticate($username, $password, $role): bool|array|null
 {
     $conn = getConnection();
     $password = md5($password);
-    $sql = "SELECT * FROM usuarios WHERE `username` = '$username' AND `password` = '$password'";
-    $result = $conn->query($sql);
-
-    if ($conn->connect_errno) {
-        $conn->close();
+    
+    // Ajuste para buscar el rol "amigo" en la tabla `usuarios`
+    if ($role === 'amigo') {
+        $sql = "SELECT * FROM usuarios WHERE username = ? AND password = ? AND role = 'amigo'";
+    } elseif ($role === 'admin') {
+        $sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
+    } else {
         return false;
     }
-    $results = $result->fetch_array();
-    $conn->close();
-    return $results;
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_array(MYSQLI_ASSOC);
+        $stmt->close();
+        $conn->close();
+        return $user;
+    } else {
+        $stmt->close();
+        $conn->close();
+        return null;
+    }
 }
+
+
 function saveCompras($arbol): bool
 {
     $nombre_comprador = $arbol['nombre_comprador'];
@@ -83,4 +100,33 @@ function saveCompras($arbol): bool
     }
     return true;
 }
+<<<<<<< HEAD
 ?>
+=======
+
+function UpdateArbol($arbol): bool
+{
+    $id = $arbol['id']; // Asegúrate de que el ID esté en el array
+    $query = "UPDATE arboles SET estado = 'Vendido' WHERE id = ?";
+
+    try {
+        $conn = getConnection();
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id); // Vincula el parámetro de ID como entero
+        $stmt->execute();
+
+        if ($stmt->affected_rows === 0) {
+            echo "No se encontró el árbol con el ID especificado.";
+            return false;
+        }
+
+        $stmt->close();
+        $conn->close();
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        return false;
+    }
+
+    return true;
+}
+>>>>>>> a178607e9ba5fbbac3ec38e77e1eb9fcdc6a9ab3
