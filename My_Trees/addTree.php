@@ -20,7 +20,7 @@ if ($_POST) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,37 +28,49 @@ if ($_POST) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Agregar Nuevo Árbol</h1>
-        <?php if (isset($error)) { echo "<p>$error</p>"; } ?>
-        <form method="POST" action="addTree.php">
-            <div class="form-group">
-                <label>Especie:</label>
-                <input type="text" name="especie" required class="form-control">
+    <div class="container my-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white text-center">
+                <h2>Agregar Nuevo Árbol</h2>
             </div>
-            <div class="form-group">
-                <label>Nombre Científico:</label>
-                <input type="text" name="nombre_cientifico" required class="form-control">
+            <div class="card-body">
+                <?php if (isset($error)) { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo htmlspecialchars($error); ?>
+                    </div>
+                <?php } ?>
+                <form method="POST" action="addTree.php">
+                    <div class="form-group">
+                        <label for="especie">Especie:</label>
+                        <input type="text" name="especie" id="especie" required class="form-control" placeholder="Ingrese la especie">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre_cientifico">Nombre Científico:</label>
+                        <input type="text" name="nombre_cientifico" id="nombre_cientifico" required class="form-control" placeholder="Ingrese el nombre científico">
+                    </div>
+                    <div class="form-group">
+                        <label for="tamaño">Tamaño:</label>
+                        <input type="text" name="tamaño" id="tamaño" required class="form-control" placeholder="Ingrese el tamaño">
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacion_geografica">Ubicación Geográfica:</label>
+                        <input type="text" name="ubicacion_geografica" id="ubicacion_geografica" required class="form-control" placeholder="Ingrese la ubicación geográfica">
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="text" name="precio" id="precio" required class="form-control" placeholder="Ingrese el precio">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Guardar Árbol</button>
+                        <a href="dashboard.php" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label>Tamaño:</label>
-                <input type="text" name="tamaño" required class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Ubicación Geográfica:</label>
-                <input type="text" name="ubicacion_geografica" required class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Precio:</label>
-                <input type="text" name="precio" required class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Foto:</label>
-                <input type="file" name="foto" required class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Árbol</button>
-            <a href="dashboard.php" class="btn btn-secondary">Cancelar</a>
-        </form>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
