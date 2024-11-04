@@ -19,12 +19,8 @@ $friendsWithTrees = getFriendsWithTrees();
 </head>
 
 <body>
-<<<<<<< HEAD
     <!-- Contenedor principal -->
     <?php require('inc/headerAdmin.php'); ?>
-=======
-    <?php require('inc/header.php'); ?>
->>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
     <div class="container mt-4">
         <h2>Amigos Registrados y Árboles Comprados</h2>
 
@@ -78,6 +74,8 @@ $friendsWithTrees = getFriendsWithTrees();
                                             <li><strong>Ubicación Geográfica:</strong>
                                                 <?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></li>
                                             <li><strong>Estado:</strong> <?php echo htmlspecialchars($tree['estado']); ?></li>
+                                            <li><strong>Precio:</strong> <?php echo htmlspecialchars($tree['precio']); ?></li>
+
                                             <hr>
 
                                             <!-- Botón para abrir el modal de edición -->
@@ -137,6 +135,13 @@ $friendsWithTrees = getFriendsWithTrees();
                                                                         name="estado"
                                                                         value="<?php echo htmlspecialchars($tree['estado']); ?>"
                                                                         readonly>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Precio</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="precio"
+                                                                        value="<?php echo htmlspecialchars($tree['precio']); ?>"
+                                                                        required>
                                                                 </div>
 
                                                             </div>

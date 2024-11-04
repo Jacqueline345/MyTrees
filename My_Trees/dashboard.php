@@ -101,7 +101,7 @@ $trees = getAllTrees();
                             <td>
 
                                 <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
-                                <a href="actions/deleteTree?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
+                                <a href="actions/deleteTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
                                     onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
                             </td>
                         </tr>

@@ -61,13 +61,8 @@ function getAllTrees(): array
 function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)
 {
     $conn = getConnection();
-<<<<<<< HEAD
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ?, fecha_actualizada = NOW() WHERE id = ?");
     $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
-=======
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, fecha_agregacion = CURDATE() WHERE id = ?");
-    $stmt->bind_param("sssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $id);
->>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
 
     $success = $stmt->execute();
     $stmt->close();
@@ -97,19 +92,12 @@ function getTreeById($id)
     }
 }
 
-function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio): bool
+function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio): bool
 {
     $conn = getConnection();
-<<<<<<< HEAD
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, precio) VALUES (?, ?, ?, ?, ?)");
 
-=======
-    // Preparar la consulta con 7 valores en total
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio, fecha_agregacion) VALUES (?, ?, ?, ?, ?, ?, CURDATE())");
-
-    // Agregar el tipo de dato adicional "s" para $precio
->>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
-    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio);
+    $stmt->bind_param("sssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio);
 
     $success = $stmt->execute();
     $stmt->close();
@@ -141,23 +129,25 @@ function getFriendsWithTrees()
 {
     $conn = getConnection();
     $query = "
-        SELECT usuarios.name AS nombre_amigo, 
+        SELECT usuarios.id AS id_usuario,
+               usuarios.name AS nombre_amigo, 
                usuarios.lastname AS apellido_amigo, 
                arboles.id AS arbol_id, 
                arboles.especie, 
                arboles.nombre_cientifico, 
                arboles.tamaño, 
                arboles.ubicacion_geografica, 
-               arboles.estado
+               arboles.estado,
+               arboles.precio
         FROM mis_compras
-        INNER JOIN usuarios ON mis_compras.id_usuario = usuarios.id
-        INNER JOIN arboles ON mis_compras.id_arbol = arboles.id
+        INNER JOIN usuarios ON mis_compras.nombre_comprador = usuarios.id
+        INNER JOIN arboles ON mis_compras.especie = arboles.especie
         ORDER BY usuarios.name;
     ";
-
+    
     $result = $conn->query($query);
     $friendsWithTrees = [];
-
+    
     while ($row = $result->fetch_assoc()) {
         $nombreCompleto = $row['nombre_amigo'] . ' ' . $row['apellido_amigo'];
         $arbol = [
@@ -167,8 +157,10 @@ function getFriendsWithTrees()
             'tamaño' => $row['tamaño'],
             'ubicacion_geografica' => $row['ubicacion_geografica'],
             'estado' => $row['estado'],
-        ];
+            'precio' => $row['precio'],
 
+        ];
+    
         if (!isset($friendsWithTrees[$nombreCompleto])) {
             $friendsWithTrees[$nombreCompleto] = [];
         }
@@ -176,4 +168,5 @@ function getFriendsWithTrees()
     }
     $conn->close();
     return $friendsWithTrees;
+    
 }

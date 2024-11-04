@@ -1,6 +1,7 @@
 <?php
 include('utils/functions.php');
 $conn = getConnection();
+$users = getUser();
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
     $sql = "SELECT id, especie, tamaño, ubicacion_geografica, estado, precio, foto FROM arboles WHERE id= ?";
@@ -26,11 +27,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <hr class="my-4">
     </div>
     <form method="post" action="actions/compra.php">
-    <label> Si deseas comprar, actualiza y luego compras... </label>
-    <input type="hidden" name="id" value="<?php echo urlencode($row['id']); ?>">
+        <label> Si deseas comprar, actualiza y luego compras... </label>
+        <input type="hidden" name="id" value="<?php echo urlencode($row['id']); ?>">
         <div class="form-group">
             <label for="nombre_comprador"> Nombre del comprador </label>
-            <input id="nombre_comprador" class="form-control" type="text" name="nombre_comprador">
+            <select id="nombre_comprador" class="form-control" name="nombre_comprador">
+                <?php foreach ($users as $id => $nombre) { ?>
+                    <option value="<?php echo $id; ?>"><?php echo $nombre; ?></option>
+                <?php } ?>
+
+            </select>
         </div>
         <div class="form-group">
             <label for="especie"> Especie </label>
@@ -64,7 +70,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <button type="submit" class="btn btn-warning"> Comprar </button>
     </form>
     <a href="actions/update.php?id=<?php echo urlencode($row['id']); ?>" class="btn btn-warning"> Actualiza la
-            compra</a>
+        compra</a>
     </div>
 </body>
 
