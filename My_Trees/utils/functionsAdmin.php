@@ -61,19 +61,16 @@ function getAllTrees(): array
 function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado)
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, fecha_agregacion = CURDATE() WHERE id = ?");
     $stmt->bind_param("sssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $id);
 
-    if ($stmt->execute()) {
-        $stmt->close();
-        $conn->close();
-        return true;
-    } else {
-        $stmt->close();
-        $conn->close();
-        return false;
-    }
+    $success = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+
+    return $success;
 }
+
 
 function getTreeById($id)
 {
@@ -95,12 +92,14 @@ function getTreeById($id)
     }
 }
 
-function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado): bool
+function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio): bool
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado) VALUES (?, ?, ?, ?, ?)");
+    // Preparar la consulta con 7 valores en total
+    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio, fecha_agregacion) VALUES (?, ?, ?, ?, ?, ?, CURDATE())");
 
-    $stmt->bind_param("sssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado);
+    // Agregar el tipo de dato adicional "s" para $precio
+    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio);
 
     $success = $stmt->execute();
     $stmt->close();
@@ -108,6 +107,8 @@ function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, 
 
     return $success;
 }
+
+
 
 function deleteTree($id): bool
 {
@@ -166,7 +167,3 @@ function getFriendsWithTrees()
     $conn->close();
     return $friendsWithTrees;
 }
-
-
-
-

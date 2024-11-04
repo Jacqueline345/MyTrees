@@ -78,7 +78,7 @@ $trees = getAllTrees();
 
         <!-- Tabla de Árboles con Estado -->
         <div class="my-4">
-            <h2>Listado de Árboles</h2>
+            <h2>Listado de Árboles Disponibles</h2>
             <table class="table table-bordered">
                 <thead>
                     <tr>
