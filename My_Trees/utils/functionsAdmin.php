@@ -61,19 +61,21 @@ function getAllTrees(): array
 function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)
 {
     $conn = getConnection();
+<<<<<<< HEAD
     $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ? WHERE id = ?");
     $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
+=======
+    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, fecha_agregacion = CURDATE() WHERE id = ?");
+    $stmt->bind_param("sssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $id);
+>>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
 
-    if ($stmt->execute()) {
-        $stmt->close();
-        $conn->close();
-        return true;
-    } else {
-        $stmt->close();
-        $conn->close();
-        return false;
-    }
+    $success = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+
+    return $success;
 }
+
 
 function getTreeById($id)
 {
@@ -98,8 +100,15 @@ function getTreeById($id)
 function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio): bool
 {
     $conn = getConnection();
+<<<<<<< HEAD
     $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio) VALUES (?, ?, ?, ?, ?, ?)");
 
+=======
+    // Preparar la consulta con 7 valores en total
+    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio, fecha_agregacion) VALUES (?, ?, ?, ?, ?, ?, CURDATE())");
+
+    // Agregar el tipo de dato adicional "s" para $precio
+>>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
     $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio);
 
     $success = $stmt->execute();
@@ -108,6 +117,8 @@ function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, 
 
     return $success;
 }
+
+
 
 function deleteTree($id): bool
 {
@@ -166,7 +177,3 @@ function getFriendsWithTrees()
     $conn->close();
     return $friendsWithTrees;
 }
-
-
-
-
