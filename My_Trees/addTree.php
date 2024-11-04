@@ -10,10 +10,6 @@ if ($_POST) {
     $estado = $_POST['estado'];
     $precio = $_POST['precio'];
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
     if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)) {
         header('Location: dashboard.php');
         exit();

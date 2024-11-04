@@ -19,12 +19,8 @@ $friendsWithTrees = getFriendsWithTrees();
 </head>
 
 <body>
-<<<<<<< HEAD
     <!-- Contenedor principal -->
     <?php require('inc/headerAdmin.php'); ?>
-=======
-    <?php require('inc/header.php'); ?>
->>>>>>> f4ec54c3f0700eb3da3109dea70aef068e69d814
     <div class="container mt-4">
         <h2>Amigos Registrados y Árboles Comprados</h2>
 
