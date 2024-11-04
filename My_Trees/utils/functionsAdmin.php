@@ -1,7 +1,7 @@
 <?php
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');
     return $connection;
 }
 

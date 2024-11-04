@@ -16,7 +16,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -27,22 +27,30 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 <body>
     <?php require('inc/header.php'); ?>
-    <div class="container mt-4">
-        <h2 class="mb-4">Detalles del Árbol</h2>
-        <div class="card">
-            <div class="card-header">
-                <h5><?php echo htmlspecialchars($tree['especie']); ?></h5>
-                <small class="text-muted">Nombre Científico: <?php echo htmlspecialchars($tree['nombre_cientifico']); ?></small>
+    <div class="container my-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white text-center py-4">
+                <h2 class="mb-0"><?php echo htmlspecialchars($tree['especie']); ?></h2>
+                <p class="mb-0"><small>Nombre Científico: <?php echo htmlspecialchars($tree['nombre_cientifico']); ?></small></p>
             </div>
             <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Tamaño:</strong> <?php echo htmlspecialchars($tree['tamaño']); ?></li>
-                    <li class="list-group-item"><strong>Ubicación Geográfica:</strong> <?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></li>
-                    <li class="list-group-item"><strong>Estado:</strong> <?php echo htmlspecialchars($tree['estado']); ?></li>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Tamaño:</strong>
+                        <span><?php echo htmlspecialchars($tree['tamaño']); ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Ubicación Geográfica:</strong>
+                        <span><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Estado:</strong>
+                        <span><?php echo htmlspecialchars($tree['estado']); ?></span>
+                    </li>
                 </ul>
             </div>
-            <div class="card-footer text-right">
-                <a href="editDetails.php?id=<?php echo $treeId; ?>" class="btn btn-primary">Editar Árbol</a>
+            <div class="card-footer d-flex justify-content-end">
+                <a href="editDetails.php?id=<?php echo $treeId; ?>" class="btn btn-primary mx-2">Editar Árbol</a>
                 <a href="seeFriends.php" class="btn btn-secondary">Volver</a>
             </div>
         </div>
