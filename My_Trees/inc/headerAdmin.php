@@ -22,10 +22,7 @@
             <a href="actions/logout.php" class="nav-link active"> Logout </a>
         </li>
         <li class="nav-item">
-            <a href="trees.php" class="nav-link active"> Trees </a>
-        </li>
-        <li class="nav-item">
-            <a href="mis_compras.php" class="nav-link active"> My shopping </a>
+            <a href="dashboard.php" class="nav-link active"> Dashboard </a>
         </li>
     </ul>
 </body>

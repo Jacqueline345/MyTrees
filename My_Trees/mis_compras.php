@@ -8,8 +8,8 @@ $result = mysqli_query($conn, $sql);
 <?php require('inc/header.php') ?>
 <div class="container-fluid">
   <div class="jumbotron">
-    <h1 class="display-4">Trees</h1>
-    <p class="lead">List of trees</p>
+    <h1 class="display-4">My shopping</h1>
+    <p class="lead">List of my shopping</p>
     <hr class="my-4">
   </div>
   <table class="table">

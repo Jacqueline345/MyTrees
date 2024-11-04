@@ -36,7 +36,7 @@ $trees = getAllTrees();
 </head>
 
 <body>
-    <?php require('inc/header.php'); ?>
+    <?php require('inc/headerAdmin.php'); ?>
     <div class="container">
         <h1 class="my-4">Dashboard del Administrador</h1>
 
@@ -99,6 +99,7 @@ $trees = getAllTrees();
                             <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
                             <td><?php echo htmlspecialchars($tree['estado']); ?></td>
                             <td>
+
                                 <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
                                 <a href="actions/deleteTree?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
                                     onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>

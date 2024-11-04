@@ -1,7 +1,7 @@
 <?php
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
     return $connection;
 }
 
@@ -33,7 +33,7 @@ function getAvailableTreesCount(): int
 function getSoldTreesCount(): int
 {
     $conn = getConnection();
-    $sql = "SELECT COUNT(*) as count FROM arboles WHERE estado = 'vendido'";
+    $sql = "SELECT COUNT(*) as count FROM arboles WHERE estado = 'Vendido'";
     $result = $conn->query($sql);
     $count = $result->fetch_assoc()['count'];
     $conn->close();
@@ -44,7 +44,7 @@ function getSoldTreesCount(): int
 function getAllTrees(): array
 {
     $conn = getConnection();
-    $sql = "SELECT id, especie, nombre_cientifico, tamaño, ubicacion_geografica, estado 
+    $sql = "SELECT id, especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio
             FROM arboles WHERE estado = 'disponible';";
     $result = $conn->query($sql);
 
@@ -58,11 +58,11 @@ function getAllTrees(): array
     return $trees;
 }
 
-function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado)
+function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ? WHERE id = ?");
-    $stmt->bind_param("sssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $id);
+    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ? WHERE id = ?");
+    $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
 
     if ($stmt->execute()) {
         $stmt->close();
@@ -95,12 +95,12 @@ function getTreeById($id)
     }
 }
 
-function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado): bool
+function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio): bool
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio) VALUES (?, ?, ?, ?, ?, ?)");
 
-    $stmt->bind_param("sssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado);
+    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio);
 
     $success = $stmt->execute();
     $stmt->close();

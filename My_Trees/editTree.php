@@ -25,7 +25,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <?php require('inc/header.php'); ?>
+    <?php require('inc/headerAdmin.php'); ?>
     <div class="container">
         <h1>Editar Árbol</h1>
         <form action="actions/editTree.php" method="post">

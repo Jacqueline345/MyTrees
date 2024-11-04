@@ -10,9 +10,9 @@ if ($_POST) {
     $tamaño = $_POST['tamaño'];
     $ubicacion_geografica = $_POST['ubicacion_geografica'];
     $estado = $_POST['estado']; // Agregando el estado
-
+    $precio = $_POST['precio'];
     // Aquí debes implementar la función para actualizar el árbol
-    if (updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado)) {
+    if (updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)) {
         header('Location: ../dashboard.php'); // Redirige al dashboard después de la actualización
     } else {
         echo "Error al actualizar el árbol.";

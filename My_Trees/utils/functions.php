@@ -24,7 +24,7 @@ function getCountry(): array
 }
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');//aqui siempre hay que cambiar la contraseña
+    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');//aqui siempre hay que cambiar la contraseña
     return $connection;
 }
 function saveUser($user): bool
@@ -79,9 +79,11 @@ function authenticate($username, $password, $role): bool|array|null
 }
 
 
-function saveCompras($arbol): bool
+function saveCompras($arbol,$user): bool
 {
-    $nombre_comprador = $arbol['nombre_comprador'];
+    $nombre_comprador = $user['name'];
+    $id_usuario = $user['id'];
+    $id_arbol = $arbol['id'];
     $especie = $arbol['especie'];
     $tamaño = $arbol['tamaño'];
     $ubicacion_geografica = $arbol['ubicacion_geografica'];
@@ -89,7 +91,8 @@ function saveCompras($arbol): bool
     $precio = $arbol['precio'];
     $foto = $arbol['foto'];
 
-    $sql = "INSERT INTO mis_compras (nombre_comprador,especie,tamaño,ubicacion_geografica,estado,precio,foto) VALUES ('$nombre_comprador','$especie','$tamaño','$ubicacion_geografica','$estado','$precio','$foto')";
+    $sql = "INSERT INTO mis_compras (nombre_comprador, id_usuario, id_arbol, especie, tamaño, ubicacion_geografica, estado, precio, foto) 
+            VALUES ('$nombre_comprador', $id_usuario, $id_arbol, '$especie', '$tamaño', '$ubicacion_geografica', '$estado', '$precio', '$foto')";
 
     try {
         $conn = getConnection();
@@ -100,4 +103,3 @@ function saveCompras($arbol): bool
     }
     return true;
 }
-?>

@@ -8,8 +8,10 @@ if ($_POST) {
     $tamaño = $_POST['tamaño'];
     $ubicacion_geografica = $_POST['ubicacion_geografica'];
     $estado = $_POST['estado'];
+    $precio = $_POST['precio'];
 
-    if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado)) {
+
+    if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)) {
         header('Location: dashboard.php');
         exit();
     } else {
@@ -53,6 +55,10 @@ if ($_POST) {
                     <option value="disponible">Disponible</option>
                     <option value="vendido">Vendido</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label>Precio:</label>
+                <input type="text" name="precio" required class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Guardar Árbol</button>
             <a href="dashboard.php" class="btn btn-secondary">Cancelar</a>
