@@ -9,7 +9,11 @@ if ($_POST) {
     $ubicacion_geografica = $_POST['ubicacion_geografica'];
     $precio = $_POST['precio'];
 
+<<<<<<< HEAD
     if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio)) {
+=======
+    if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)) {
+>>>>>>> f71c10390a058d3f6c474314e4706b9a4d7792a3
         header('Location: dashboard.php');
         exit();
     } else {
