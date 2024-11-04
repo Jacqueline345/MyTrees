@@ -98,6 +98,7 @@ $trees = getAllTrees();
                             <td><?php echo htmlspecialchars($tree['tamaño']); ?></td>
                             <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
                             <td><?php echo htmlspecialchars($tree['estado']); ?></td>
+                            <td><?php echo htmlspecialchars($tree['foto']); ?></td>
                             <td>
 
                                 <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>

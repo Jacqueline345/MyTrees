@@ -75,7 +75,7 @@ $friendsWithTrees = getFriendsWithTrees();
                                                 <?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></li>
                                             <li><strong>Estado:</strong> <?php echo htmlspecialchars($tree['estado']); ?></li>
                                             <li><strong>Precio:</strong> <?php echo htmlspecialchars($tree['precio']); ?></li>
-
+                                            <li><strong>Foto:</strong><?php echo htmlspecialchars($tree['foto']);?></li>
                                             <hr>
 
                                             <!-- Botón para abrir el modal de edición -->

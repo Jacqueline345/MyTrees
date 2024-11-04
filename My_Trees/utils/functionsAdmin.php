@@ -92,12 +92,12 @@ function getTreeById($id)
     }
 }
 
-function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio): bool
+function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $foto): bool
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, precio) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, precio, foto) VALUES (?, ?, ?, ?, ?, ?)");
 
-    $stmt->bind_param("sssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio);
+    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $foto);
 
     $success = $stmt->execute();
     $stmt->close();
@@ -138,7 +138,8 @@ function getFriendsWithTrees()
                arboles.tamaño, 
                arboles.ubicacion_geografica, 
                arboles.estado,
-               arboles.precio
+               arboles.precio, 
+               arboles.foto
         FROM mis_compras
         INNER JOIN usuarios ON mis_compras.nombre_comprador = usuarios.id
         INNER JOIN arboles ON mis_compras.especie = arboles.especie
@@ -158,6 +159,7 @@ function getFriendsWithTrees()
             'ubicacion_geografica' => $row['ubicacion_geografica'],
             'estado' => $row['estado'],
             'precio' => $row['precio'],
+            'foto' => $row['foto'],
 
         ];
     

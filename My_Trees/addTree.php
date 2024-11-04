@@ -8,8 +8,9 @@ if ($_POST) {
     $tamaño = $_POST['tamaño'];
     $ubicacion_geografica = $_POST['ubicacion_geografica'];
     $precio = $_POST['precio'];
+    $foto = $_FILES['foto'];
 
-    if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio)) {
+    if (addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $foto)) {
         header('Location: dashboard.php');
         exit();
     } else {
@@ -50,6 +51,10 @@ if ($_POST) {
             <div class="form-group">
                 <label>Precio:</label>
                 <input type="text" name="precio" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Foto:</label>
+                <input type="file" name="foto" required class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Guardar Árbol</button>
             <a href="dashboard.php" class="btn btn-secondary">Cancelar</a>
