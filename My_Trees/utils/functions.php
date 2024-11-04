@@ -47,7 +47,7 @@ function getUser(): array
 }
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');//aqui siempre hay que cambiar la contraseña
+    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');//aqui siempre hay que cambiar la contraseña
     return $connection;
 }
 function saveUser($user): bool

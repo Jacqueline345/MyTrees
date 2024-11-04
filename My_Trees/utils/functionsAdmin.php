@@ -1,7 +1,7 @@
 <?php
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
     return $connection;
 }
 
@@ -61,17 +61,8 @@ function getAllTrees(): array
 function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)
 {
     $conn = getConnection();
-<<<<<<< HEAD
     $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ?, fecha_actualizada = NOW() WHERE id = ?");
     $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
-=======
-
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ? WHERE id = ?");
-    $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
-
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, fecha_agregacion = CURDATE() WHERE id = ?");
-    $stmt->bind_param("sssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $id);
->>>>>>> f71c10390a058d3f6c474314e4706b9a4d7792a3
 
     $success = $stmt->execute();
     $stmt->close();
@@ -104,19 +95,9 @@ function getTreeById($id)
 function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio): bool
 {
     $conn = getConnection();
-<<<<<<< HEAD
     $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, precio) VALUES (?, ?, ?, ?, ?)");
 
     $stmt->bind_param("sssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio);
-=======
-
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio) VALUES (?, ?, ?, ?, ?, ?)");
-    // Preparar la consulta con 7 valores en total
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio, fecha_agregacion) VALUES (?, ?, ?, ?, ?, ?, CURDATE())");
-
-    // Agregar el tipo de dato adicional "s" para $precio
-    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio);
->>>>>>> f71c10390a058d3f6c474314e4706b9a4d7792a3
 
     $success = $stmt->execute();
     $stmt->close();
