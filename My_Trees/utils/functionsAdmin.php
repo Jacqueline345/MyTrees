@@ -1,7 +1,7 @@
 <?php
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
     return $connection;
 }
 
@@ -109,7 +109,7 @@ function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, 
     $conn = getConnection();
 
     // Procesar la imagen
-    $uploadDir = 'C:\xampp\MyTrees\My_Trees\uploads'; // Asegúrate de que este directorio exista y tenga permisos de escritura
+    $uploadDir = 'C:\xampp\Proyecto-613\My_Trees\uploads'; // Asegúrate de que este directorio exista y tenga permisos de escritura
     $filePath = $uploadDir . basename($foto['name']);
 
     // Mover el archivo subido a la carpeta deseada

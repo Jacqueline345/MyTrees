@@ -80,7 +80,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <div class="form-group text-center">
                 <label for="foto">Foto</label>
                 <?php if (isset($row['foto'])): ?>
-                    <img id="foto" class="img-fluid rounded shadow mt-2" src="<?php echo htmlspecialchars($row['foto']); ?>" alt="Foto del árbol">
+                    <img id="foto" class="img-fluid rounded shadow mt-2" src="<?php echo htmlspecialchars($row['foto']); ?>" alt="Foto del arbol">
                 <?php else: ?>
                     <p class="text-muted">No hay foto disponible</p>
                 <?php endif; ?>

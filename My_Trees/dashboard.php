@@ -107,7 +107,7 @@ $trees = getAllTrees();
                                 <td><?php echo htmlspecialchars($tree['estado']); ?></td>
                                 <td>
                                     <?php if (!empty($tree['foto'])): ?>
-                                        <img src="<?php echo htmlspecialchars('uploads/' . basename($tree['foto'])); ?>"
+                                        <img src="<?php echo htmlspecialchars('C:\xampp\Proyecto-613\My_Trees/' . basename($tree['foto'])); ?>"
                                             alt="Imagen de <?php echo htmlspecialchars($tree['especie']); ?>"
                                             style="max-width: 100px; max-height: 100px;">
                                     <?php else: ?>
