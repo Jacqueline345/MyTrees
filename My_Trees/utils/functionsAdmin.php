@@ -44,8 +44,8 @@ function getSoldTreesCount(): int
 function getAllTrees(): array
 {
     $conn = getConnection();
-    $sql = "SELECT id, especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio
-            FROM arboles WHERE estado = 'disponible';";
+    $sql = "SELECT id, especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio, foto
+            FROM arboles WHERE estado = 'disponible';"; // Se incluye el campo 'foto'
     $result = $conn->query($sql);
 
     $trees = [];
@@ -58,18 +58,30 @@ function getAllTrees(): array
     return $trees;
 }
 
-function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio)
+
+function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $fotoPath = null)
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ?, fecha_actualizada = NOW() WHERE id = ?");
-    $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
+    
+    // Preparar la consulta de actualización
+    if ($fotoPath) {
+        // Si se proporciona una nueva foto, actualizamos también el campo foto
+        $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ?, foto = ?, fecha_actualizada = NOW() WHERE id = ?");
+        $stmt->bind_param("sssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $fotoPath, $id);
+    } else {
+        // Si no se proporciona una nueva foto, actualizamos sin el campo foto
+        $stmt = $conn->prepare("UPDATE arboles SET especie = ?, nombre_cientifico = ?, tamaño = ?, ubicacion_geografica = ?, estado = ?, precio = ?, fecha_actualizada = NOW() WHERE id = ?");
+        $stmt->bind_param("ssssssi", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $id);
+    }
 
+    // Ejecutar la consulta
     $success = $stmt->execute();
     $stmt->close();
     $conn->close();
 
     return $success;
 }
+
 
 
 function getTreeById($id)
@@ -95,9 +107,19 @@ function getTreeById($id)
 function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $foto): bool
 {
     $conn = getConnection();
-    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, precio, foto) VALUES (?, ?, ?, ?, ?, ?)");
 
-    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $foto);
+    // Procesar la imagen
+    $uploadDir = 'C:\xampp\MyTrees\My_Trees\uploads'; // Asegúrate de que este directorio exista y tenga permisos de escritura
+    $filePath = $uploadDir . basename($foto['name']);
+
+    // Mover el archivo subido a la carpeta deseada
+    if (!move_uploaded_file($foto['tmp_name'], $filePath)) {
+        return false; // Error al mover el archivo
+    }
+
+    // Preparar la consulta
+    $stmt = $conn->prepare("INSERT INTO arboles (especie, nombre_cientifico, tamaño, ubicacion_geografica, precio, foto) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $filePath);
 
     $success = $stmt->execute();
     $stmt->close();
@@ -105,6 +127,7 @@ function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, 
 
     return $success;
 }
+
 
 
 
@@ -145,10 +168,10 @@ function getFriendsWithTrees()
         INNER JOIN arboles ON mis_compras.especie = arboles.especie
         ORDER BY usuarios.name;
     ";
-    
+
     $result = $conn->query($query);
     $friendsWithTrees = [];
-    
+
     while ($row = $result->fetch_assoc()) {
         $nombreCompleto = $row['nombre_amigo'] . ' ' . $row['apellido_amigo'];
         $arbol = [
@@ -162,7 +185,7 @@ function getFriendsWithTrees()
             'foto' => $row['foto'],
 
         ];
-    
+
         if (!isset($friendsWithTrees[$nombreCompleto])) {
             $friendsWithTrees[$nombreCompleto] = [];
         }
@@ -170,5 +193,4 @@ function getFriendsWithTrees()
     }
     $conn->close();
     return $friendsWithTrees;
-    
 }

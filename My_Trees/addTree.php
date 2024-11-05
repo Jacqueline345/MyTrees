@@ -39,7 +39,7 @@ if ($_POST) {
                         <?php echo htmlspecialchars($error); ?>
                     </div>
                 <?php } ?>
-                <form method="POST" action="addTree.php">
+                <form method="POST" action="addTree.php" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="especie">Especie:</label>
                         <input type="text" name="especie" id="especie" required class="form-control" placeholder="Ingrese la especie">
@@ -59,6 +59,10 @@ if ($_POST) {
                     <div class="form-group">
                         <label for="precio">Precio:</label>
                         <input type="text" name="precio" id="precio" required class="form-control" placeholder="Ingrese el precio">
+                    </div>
+                    <div class="form-group">
+                        <label for="foto">Foto del Árbol:</label>
+                        <input type="file" name="foto" id="foto" accept="image/*" required class="form-control-file">
                     </div>
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Guardar Árbol</button>

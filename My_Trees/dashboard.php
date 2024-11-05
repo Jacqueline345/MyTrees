@@ -19,6 +19,7 @@ if (isset($_SESSION['success_message'])): ?>
         </button>
     </div>
 <?php endif;
+
 require('utils/functionsAdmin.php');
 
 // Obtener estadísticas
@@ -28,7 +29,6 @@ $treesSoldCount = getSoldTreesCount();
 
 // Obtener las especies de árboles
 $trees = getAllTrees();
-
 ?>
 
 <!DOCTYPE html>
@@ -88,22 +88,17 @@ $trees = getAllTrees();
                 <table class="table table-striped table-hover m-0">
                     <thead class="thead-dark">
                         <tr>
-                            <td><?php echo htmlspecialchars($tree['especie']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['nombre_cientifico']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['tamaño']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['estado']); ?></td>
-                            <td><?php echo htmlspecialchars($tree['foto']); ?></td>
-                            <td>
-
-                                <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning">Editar</a>
-                                <a href="actions/deleteTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger"
-                                    onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
-                            </td>
+                            <th>Especie</th>
+                            <th>Nombre Científico</th>
+                            <th>Tamaño</th>
+                            <th>Ubicación Geográfica</th>
+                            <th>Estado</th>
+                            <th>Foto</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($trees as $tree) { ?>
+                        <?php foreach ($trees as $tree): ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($tree['especie']); ?></td>
                                 <td><?php echo htmlspecialchars($tree['nombre_cientifico']); ?></td>
@@ -111,16 +106,28 @@ $trees = getAllTrees();
                                 <td><?php echo htmlspecialchars($tree['ubicacion_geografica']); ?></td>
                                 <td><?php echo htmlspecialchars($tree['estado']); ?></td>
                                 <td>
-                                    <a href="editTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="actions/deleteTree.php?id=<?php echo $tree['id']; ?>" class="btn btn-danger btn-sm"
-                                       onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
+                                    <?php if (!empty($tree['foto'])): ?>
+                                        <img src="<?php echo htmlspecialchars('uploads/' . basename($tree['foto'])); ?>"
+                                            alt="Imagen de <?php echo htmlspecialchars($tree['especie']); ?>"
+                                            style="max-width: 100px; max-height: 100px;">
+                                    <?php else: ?>
+                                        Sin imagen
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <a href="editTree.php?id=<?php echo $tree['id']; ?>"
+                                        class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="actions/deleteTree.php?id=<?php echo $tree['id']; ?>"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('¿Estás seguro de eliminar este árbol?');">Eliminar</a>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
