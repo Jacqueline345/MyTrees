@@ -107,7 +107,7 @@ $trees = getAllTrees();
                                 <td><?php echo htmlspecialchars($tree['estado']); ?></td>
                                 <td>
                                     <?php if (!empty($tree['foto'])): ?>
-                                        <img src="<?php echo htmlspecialchars('C:\xampp\Proyecto-613\My_Trees/' . basename($tree['foto'])); ?>"
+                                        <img src="<?php echo htmlspecialchars('C:\xampp\Proyecto-613\My_Trees' . basename($tree['foto'])); ?>"
                                             alt="Imagen de <?php echo htmlspecialchars($tree['especie']); ?>"
                                             style="max-width: 100px; max-height: 100px;">
                                     <?php else: ?>
@@ -129,7 +129,7 @@ $trees = getAllTrees();
         </div>
 
     </div>
-
+    <!-- Incluye jQuery y JavaScript de Boostrap para hacer el modal más interactivo y ayudar a la experiencia de usuario-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

@@ -1,11 +1,18 @@
 <?php
+/**
+ * Summary of getConnection
+ * @return bool|mysqli
+ * ace la conexión a la base de datos
+ */
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');
+    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');
     return $connection;
 }
 
 /**
+ * Summary of getFriendsCount
+ * @return int
  * Obtener la cantidad de amigos registrados (desde la tabla usuarios)
  */
 function getFriendsCount(): int
@@ -18,7 +25,11 @@ function getFriendsCount(): int
     return (int) $count;
 }
 
-// Obtener la cantidad de árboles disponibles
+/**
+ * Summary of getAvailableTreesCount
+ * @return int
+ * Obtener la cantidad de árboles disponibles
+ */
 function getAvailableTreesCount(): int
 {
     $conn = getConnection();
@@ -29,7 +40,11 @@ function getAvailableTreesCount(): int
     return (int) $count;
 }
 
-// Obtener la cantidad de árboles vendidos
+/**
+ * Summary of getSoldTreesCount
+ * @return int
+ * Obtener la cantidad de árboles vendidos
+ */
 function getSoldTreesCount(): int
 {
     $conn = getConnection();
@@ -40,12 +55,16 @@ function getSoldTreesCount(): int
     return (int) $count;
 }
 
-// Obtener todos los árboles con su estado (en una sola lista)
+/**
+ * Summary of getAllTrees
+ * @return array
+ * Obtener todos los árboles disponibles
+ */
 function getAllTrees(): array
 {
     $conn = getConnection();
     $sql = "SELECT id, especie, nombre_cientifico, tamaño, ubicacion_geografica, estado, precio, foto
-            FROM arboles WHERE estado = 'disponible';"; // Se incluye el campo 'foto'
+            FROM arboles WHERE estado = 'disponible';"; 
     $result = $conn->query($sql);
 
     $trees = [];
@@ -58,7 +77,19 @@ function getAllTrees(): array
     return $trees;
 }
 
-
+/**
+ * Summary of updateTree
+ * @param mixed $id
+ * @param mixed $especie
+ * @param mixed $nombre_cientifico
+ * @param mixed $tamaño
+ * @param mixed $ubicacion_geografica
+ * @param mixed $estado
+ * @param mixed $precio
+ * @param mixed $fotoPath
+ * @return bool
+ * Actualiza la información del árbol
+ */
 function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $estado, $precio, $fotoPath = null)
 {
     $conn = getConnection();
@@ -83,7 +114,12 @@ function updateTree($id, $especie, $nombre_cientifico, $tamaño, $ubicacion_geog
 }
 
 
-
+/**
+ * Summary of getTreeById
+ * @param mixed $id
+ * @return array|bool|null
+ * Obtiene el árbol segín el id que se seleccione
+ */
 function getTreeById($id)
 {
     $conn = getConnection();
@@ -104,12 +140,23 @@ function getTreeById($id)
     }
 }
 
+/**
+ * Summary of addTree
+ * @param mixed $especie
+ * @param mixed $nombre_cientifico
+ * @param mixed $tamaño
+ * @param mixed $ubicacion_geografica
+ * @param mixed $precio
+ * @param mixed $foto
+ * @return bool
+ * Agrega un nuevo árbol
+ */
 function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, $precio, $foto): bool
 {
     $conn = getConnection();
 
     // Procesar la imagen
-    $uploadDir = 'C:\xampp\Proyecto-613\My_Trees\uploads'; // Asegúrate de que este directorio exista y tenga permisos de escritura
+    $uploadDir = 'C:\xampp\Proyecto-613\My_Trees\uploads'; //dirección en la que se encuentran las imagenes
     $filePath = $uploadDir . basename($foto['name']);
 
     // Mover el archivo subido a la carpeta deseada
@@ -128,9 +175,12 @@ function addTree($especie, $nombre_cientifico, $tamaño, $ubicacion_geografica, 
     return $success;
 }
 
-
-
-
+/**
+ * Summary of deleteTree
+ * @param mixed $id
+ * @return bool
+ * se elimina el árbol según el id que se seleccione
+ */
 function deleteTree($id): bool
 {
     $conn = getConnection();
@@ -143,6 +193,7 @@ function deleteTree($id): bool
 
     return $success;
 }
+
 /**
  * Summary of getFriendsWithTrees
  * @return array

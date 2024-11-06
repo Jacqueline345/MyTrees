@@ -1,4 +1,9 @@
 <?php
+/**
+ * Summary of getCountry
+ * @return array
+ * Se encarga de cargar los países de la tabla country
+ */
 function getCountry(): array
 {
     $conn = getConnection();
@@ -22,6 +27,12 @@ function getCountry(): array
     return $country;
 
 }
+
+/**
+ * Summary of getUser
+ * @return array
+ * Obtiene los nombres de los usuarios según el id
+ */
 function getUser(): array
 {
     $conn = getConnection();
@@ -45,11 +56,24 @@ function getUser(): array
     return $users;
 
 }
+
+/**
+ * Summary of getConnection
+ * @return bool|mysqli
+ * se encarga de la conexión a la base de datos
+ */
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost:3306', 'root', '123456', 'my_trees');//aqui siempre hay que cambiar la contraseña
+    $connection = mysqli_connect('localhost:3306', 'root', '', 'my_trees');//aqui siempre hay que cambiar la contraseña
     return $connection;
 }
+
+/**
+ * Summary of saveUser
+ * @param mixed $user
+ * @return bool
+ * Guarda los datos del usuario en la tabla 'usuarios'
+ */
 function saveUser($user): bool
 {
     $firstName = $user['firstName'];
@@ -70,6 +94,15 @@ function saveUser($user): bool
     }
     return true;
 }
+
+/**
+ * Summary of authenticate
+ * @param mixed $username
+ * @param mixed $password
+ * @param mixed $role
+ * @return bool|array|null
+ * Valida a la hora de iniciar seción si es amigo o admin
+ */
 function authenticate($username, $password, $role): bool|array|null
 {
     $conn = getConnection();
@@ -101,7 +134,12 @@ function authenticate($username, $password, $role): bool|array|null
     }
 }
 
-
+/**
+ * Summary of saveCompras
+ * @param mixed $arbol
+ * @return bool
+ * Guarda la compra del usuario
+ */
 function saveCompras($arbol): bool
 {
     $nombre_comprador = $arbol['nombre_comprador'];

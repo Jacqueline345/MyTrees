@@ -20,7 +20,7 @@ if ($_POST) {
         // Verifica el tipo de archivo (opcional, dependiendo de tus requisitos)
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
         if (in_array($foto['type'], $allowedTypes)) {
-            $uploadDir = '../uploads/';
+            $uploadDir = '..uploads/';
             $fotoPath = $uploadDir . basename($foto['name']);
             // Mover el archivo a la carpeta de uploads
             if (move_uploaded_file($foto['tmp_name'], $fotoPath)) {

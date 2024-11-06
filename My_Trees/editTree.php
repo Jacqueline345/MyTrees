@@ -72,7 +72,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     </div>
                     <div class="form-group">
                         <label for="foto">Foto del Árbol:</label>
-                        <input type="file" name="foto" id="foto" accept="image/*" required class="form-control-file">
+                        <input type="file" name="foto" id="foto" accept="image/*" class="form-control-file">
                     </div>
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Actualizar Árbol</button>
